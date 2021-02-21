@@ -193,5 +193,19 @@ for epoch in range(opt.n_epochs):
             save_image(gen_imgs.data[:25], "images/%d.png" % batches_done, nrow=5, normalize=True)
 
             
+            
+            
+#save the trained model
+
+PATH = './gan_G_trained_1.pth'
+PATH2 = './gan_D_trained_1.pth'
+torch.save(generator.state_dict(), PATH)
+torch.save(discriminator.state_dict(), PATH2)
+
+#first load the model (not nessasary here but just to note)
+#model = GCN_regression_Net(n_features = 6, nhid1 = 10, nhid2 = 20).to(device)
+#model.load_state_dict(torch.load(PATH))
+            
+            
 print("empty cuda mem:")
 torch.cuda.empty_cache()

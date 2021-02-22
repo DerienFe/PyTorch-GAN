@@ -38,8 +38,8 @@ class Self_dataset(Dataset):
             
         img_name = os.path.join(self.PATH, file_names[idx])
         
-        #image = cv2.imread(img_name, 0) use this for grayscale
-        image = cv2.imread(img_name)
+        image = cv2.imread(img_name, 0) #use this for grayscale
+        #image = cv2.imread(img_name)
         
         image = transforms.functional.to_pil_image(image)
         

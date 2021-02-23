@@ -17,6 +17,9 @@ import torch
 from self_dataset import *
 
 os.makedirs("images", exist_ok=True)
+os.makedirs("models", exist_ok=True)
+os.makedirs("img_series", exist_ok=True)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_epochs", type=int, default=1000, help="number of epochs of training")
@@ -33,6 +36,15 @@ opt = parser.parse_args()
 print(opt)
 
 cuda = True if torch.cuda.is_available() else False
+
+def generate_images(number, epoch):
+    
+    matrix = np.zeros([imgs.shape[0], opt.latent_dim])+number
+    
+    image = generator(Variable(Tensor(matrix)))
+    
+    save_image(image, "images_series/img_%d_%d.png" %(number, epoch), normalize=True)
+    return
 
 
 def weights_init_normal(m):
@@ -217,6 +229,9 @@ for epoch in range(opt.n_epochs):
             d_save_path = './models/discriminator_model_{0}.pth'.format(epoch)
             torch.save(generator.state_dict(), g_save_path)
             torch.save(discriminator.state_dict(), d_save_path)
+            
+            for img_idx in range(1,11):
+                generate_images(img_idx, epoch)
             
             
 print("empty cuda mem:")
